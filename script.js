@@ -84,15 +84,25 @@ function spin() {
 
     if (!spinning) {
         spinning = true;
-        const spinAngle = Math.random() * 360 + 360 * 5; // Random spin angle
-        rotation += spinAngle;
+
+        const numSegments = words.length;
+        const degreesPerSegment = 360 / numSegments;
+
+        // Determine the winning segment beforehand
+        const winningSegmentIndex = Math.floor(Math.random() * numSegments);
+        const winner = words[winningSegmentIndex];
+
+        // Calculate the rotation to center the winning segment at the top
+        const winningAngle = winningSegmentIndex * degreesPerSegment;
+        const randomOffsetWithinSegment = (Math.random() - 0.5) * degreesPerSegment * 0.8;
+        const targetRotation = 360 * 5 - winningAngle + randomOffsetWithinSegment - degreesPerSegment / 2;
+
+
+        rotation = targetRotation;
         wheel.style.transform = `rotate(${rotation}deg)`;
 
         setTimeout(() => {
-            const numSegments = words.length;
-            const degreesPerSegment = 360 / numSegments;
-            const winningSegment = Math.floor((360 - (rotation % 360) + degreesPerSegment / 2) / degreesPerSegment) % numSegments;
-            showWinner(words[winningSegment]);
+            showWinner(winner);
             spinning = false;
         }, 4000); // Corresponds to the transition duration in CSS
     }
