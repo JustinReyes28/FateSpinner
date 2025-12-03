@@ -83,7 +83,7 @@ h1 {
     outline: none;
     transition: all 0.3s ease;
     margin-left: -10px;
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
 #wordInput:focus {
@@ -91,6 +91,7 @@ h1 {
 }
 
 #spinBtn,
+#addWordBtn,
 #resetBtn {
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
@@ -107,6 +108,10 @@ h1 {
 
 
 
+#addWordBtn {
+    background: #43A58F;
+}
+
 #spinBtn {
     background: #5c7cfa;
 }
@@ -115,12 +120,14 @@ h1 {
     background: #f06595;
 }
 
+#addWordBtn:hover,
 #spinBtn:hover,
 #resetBtn:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
+#addWordBtn:active,
 #spinBtn:active,
 #resetBtn:active {
     transform: translateY(0);
@@ -132,6 +139,7 @@ h1 {
 
 
 #spinBtn:disabled,
+#addWordBtn:disabled,
 #resetBtn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
