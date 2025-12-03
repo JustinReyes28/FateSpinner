@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FateSpinner - Spin the Wheel of Fate</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>FateSpinner</h1>
+        <p>Enter a word and spin the wheel to reveal your fate!</p>
+        
+        <div class="input-section">
+            <input type="text" id="wordInput" placeholder="Enter a word..." maxlength="20">
+            <button id="spinButton">SPIN THE WHEEL</button>
+        </div>
+        
+        <div class="wheel-container">
+            <div class="wheel" id="wheel">
+                <div class="segment" style="background-color: #FF6B6B;">FATE</div>
+                <div class="segment" style="background-color: #4ECDC4;">DESTINY</div>
+                <div class="segment" style="background-color: #45B7D1;">LUCK</div>
+                <div class="segment" style="background-color: #96CEB4;">FORTUNE</div>
+                <div class="segment" style="background-color: #FFEAA7;">CHANCE</div>
+                <div class="segment" style="background-color: #DDA0DD;">FATE</div>
+                <div class="segment" style="background-color: #98D8C8;">DESTINY</div>
+                <div class="segment" style="background-color: #F7DC6F;">LUCK</div>
+            </div>
+            <div class="center-dot"></div>
+            <div class="pointer"></div>
+        </div>
+        
+        <div class="result" id="result"></div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
