@@ -82,6 +82,8 @@ h1 {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     outline: none;
     transition: all 0.3s ease;
+    margin-left: -10px;
+    margin-right: 20px;
 }
 
 #wordInput:focus {
@@ -89,6 +91,7 @@ h1 {
 }
 
 #spinBtn,
+#addWordBtn,
 #resetBtn {
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
@@ -103,9 +106,10 @@ h1 {
     text-transform: uppercase;
 }
 
+
+
 #addWordBtn {
-    background: #ff6b6b;
-    border: 2px solid #a23b59; /* Darker red border */
+    background: #43A58F;
 }
 
 #spinBtn {
@@ -130,13 +134,17 @@ h1 {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-#addWordBtn:hover {
-    background: #e05c6b; /* Slightly darker red on hover */
-}
 
-#addWordBtn:focus-visible {
-    outline: 3px solid #a23b59; /* Focus indicator */
-    outline-offset: 2px;
+
+
+
+#spinBtn:disabled,
+#addWordBtn:disabled,
+#resetBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -195,4 +203,25 @@ h1 {
     to {
         opacity: 1;
     }
+}
+
+.input-warning {
+    color: #ff9999;
+    font-size: 0.9rem;
+    margin-top: 8px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    text-align: center;
+    width: 100%;
+}
+
+.input-warning.hidden {
+    opacity: 0;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 15px 0;
 }

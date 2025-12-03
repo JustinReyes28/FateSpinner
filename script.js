@@ -8,9 +8,25 @@ const modal = document.getElementById('winnerModal');
 const winnerEl = document.getElementById('winner');
 const closeBtn = document.querySelector('.close-btn');
 
+
 let words = [];
 let spinning = false;
 let rotation = 0;
+
+// Function to check input and enable/disable spin button accordingly
+function checkInput() {
+    const word = wordInput.value.trim();
+
+
+    // Enable spin button if there are at least 2 words
+    if (words.length >= 2) {
+        spinBtn.disabled = false;
+        spinBtn.classList.remove('disabled');
+    } else {
+        spinBtn.disabled = true;
+        spinBtn.classList.add('disabled');
+    }
+}
 
 function drawWheel() {
     const numSegments = words.length;
@@ -56,6 +72,7 @@ function addWord() {
         words.push(word);
         wordInput.value = '';
         drawWheel();
+        checkInput(); // Update input validation after adding word
     }
 }
 
@@ -84,6 +101,7 @@ function spin() {
 function reset() {
     words = [];
     drawWheel();
+    checkInput(); // Update button state after reset
 }
 
 function showWinner(winner) {
@@ -105,7 +123,13 @@ window.addEventListener('click', (event) => {
     }
 });
 
+// Add event listeners for input field
+wordInput.addEventListener('input', checkInput);
+wordInput.addEventListener('propertychange', checkInput); // For older browsers
+
 window.addEventListener('resize', drawWheel);
 
+// Initialize the input check
+checkInput();
 
 drawWheel();
