@@ -58,8 +58,8 @@ h1 {
 .pointer {
     position: absolute;
     top: 50%;
-    right: -30px;
-    transform: translateY(-50%);
+    right: -50px;
+    transform: translateY(-50%) rotate(180deg);
     width: 0;
     height: 0;
     border-top: 20px solid transparent;
