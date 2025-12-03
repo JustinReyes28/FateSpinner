@@ -1,81 +1,105 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const wheel = document.getElementById('wheel');
-    const spinButton = document.getElementById('spinButton');
-    const wordInput = document.getElementById('wordInput');
-    const resultDiv = document.getElementById('result');
-    
-    // Segments of the wheel
-    const segments = [
-        "FATE", "DESTINY", "LUCK", "FORTUNE", 
-        "CHANCE", "FATE", "DESTINY", "LUCK"
-    ];
-    
-    // Colors for the segments
-    const colors = [
-        "#FF6B6B", "#4ECDC4", "#45B7D1", "#96CEB4", 
-        "#FFEAA7", "#DDA0DD", "#98D8C8", "#F7DC6F"
-    ];
-    
-    // Create segments dynamically
-    function createWheelSegments() {
-        wheel.innerHTML = '';
-        const segmentAngle = 360 / segments.length;
-        
-        segments.forEach((segment, index) => {
-            const segmentElement = document.createElement('div');
-            segmentElement.className = 'segment';
-            segmentElement.style.transform = `rotate(${index * segmentAngle}deg)`;
-            segmentElement.style.backgroundColor = colors[index];
-            segmentElement.textContent = segment;
-            wheel.appendChild(segmentElement);
-        });
+const wheel = document.getElementById('wheel');
+const ctx = wheel.getContext('2d');
+const wordInput = document.getElementById('wordInput');
+const addWordBtn = document.getElementById('addWordBtn');
+const spinBtn = document.getElementById('spinBtn');
+const modal = document.getElementById('winnerModal');
+const winnerEl = document.getElementById('winner');
+const closeBtn = document.querySelector('.close-btn');
+
+let words = [];
+let spinning = false;
+let rotation = 0;
+
+function drawWheel() {
+    const numSegments = words.length;
+    const anglePerSegment = (2 * Math.PI) / numSegments;
+
+    // Set canvas size based on its container
+    const container = document.querySelector('.container');
+    wheel.width = container.clientWidth;
+    wheel.height = container.clientHeight;
+    const radius = wheel.width / 2 - 10;
+    const center = wheel.width / 2;
+
+
+    ctx.clearRect(0, 0, wheel.width, wheel.height);
+
+    for (let i = 0; i < numSegments; i++) {
+        const startAngle = i * anglePerSegment;
+        const endAngle = (i + 1) * anglePerSegment;
+
+        ctx.beginPath();
+        ctx.moveTo(center, center);
+        ctx.arc(center, center, radius, startAngle, endAngle);
+        ctx.closePath();
+
+        ctx.fillStyle = `hsl(${(i * 360) / numSegments}, 70%, 80%)`;
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.save();
+        ctx.translate(center, center);
+        ctx.rotate(startAngle + anglePerSegment / 2);
+        ctx.textAlign = 'right';
+        ctx.fillStyle = '#333';
+        ctx.font = `bold ${radius / 10}px sans-serif`;
+        ctx.fillText(words[i], radius - 15, 10);
+        ctx.restore();
     }
-    
-    // Initialize the wheel
-    createWheelSegments();
-    
-    // Spin the wheel
-    spinButton.addEventListener('click', function() {
-        // Get the input word
-        const word = wordInput.value.trim();
-        
-        // Validate input
-        if (!word) {
-            alert('Please enter a word first!');
-            return;
-        }
-        
-        // Disable the button during spinning
-        spinButton.disabled = true;
-        spinButton.classList.add('disabled');
-        
-        // Clear previous result
-        resultDiv.textContent = '';
-        
-        // Calculate a random rotation (multiple of 360 + random segment angle)
-        const segmentAngle = 360 / segments.length;
-        const randomSegment = Math.floor(Math.random() * segments.length);
-        const extraRotations = 5; // Number of extra full rotations
-        const totalRotation = (360 * extraRotations) + (360 - (randomSegment * segmentAngle));
-        
-        // Apply the rotation with transition
-        wheel.style.transform = `rotate(${totalRotation}deg)`;
-        
-        // After spinning is done, show the result
+}
+
+function addWord() {
+    const word = wordInput.value.trim();
+    if (word) {
+        words.push(word);
+        wordInput.value = '';
+        drawWheel();
+    }
+}
+
+function spin() {
+    if (words.length < 2) {
+        alert('Please add at least two words to the wheel.');
+        return;
+    }
+
+    if (!spinning) {
+        spinning = true;
+        const spinAngle = Math.random() * 360 + 360 * 5; // Random spin angle
+        rotation += spinAngle;
+        wheel.style.transform = `rotate(${rotation}deg)`;
+
         setTimeout(() => {
-            const result = segments[randomSegment];
-            resultDiv.innerHTML = `Your word "<strong>${word}</strong>" meets <strong>${result}</strong>!`;
-            
-            // Re-enable the button
-            spinButton.disabled = false;
-            spinButton.classList.remove('disabled');
-        }, 4000); // Match the CSS transition duration
-    });
-    
-    // Allow pressing Enter to spin the wheel
-    wordInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            spinButton.click();
-        }
-    });
+            const numSegments = words.length;
+            const degreesPerSegment = 360 / numSegments;
+            const currentRotation = rotation % 360;
+            const winningSegment = Math.floor((360 - currentRotation + degreesPerSegment / 2) / degreesPerSegment) % numSegments;
+            showWinner(words[winningSegment]);
+            spinning = false;
+        }, 4000); // Corresponds to the transition duration in CSS
+    }
+}
+
+function showWinner(winner) {
+    winnerEl.textContent = winner;
+    modal.style.display = 'block';
+}
+
+function hideWinner() {
+    modal.style.display = 'none';
+}
+
+addWordBtn.addEventListener('click', addWord);
+spinBtn.addEventListener('click', spin);
+closeBtn.addEventListener('click', hideWinner);
+window.addEventListener('click', (event) => {
+    if (event.target == modal) {
+        hideWinner();
+    }
 });
+
+window.addEventListener('resize', drawWheel);
+
+
+drawWheel();
