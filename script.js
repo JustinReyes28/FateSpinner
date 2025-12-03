@@ -3,6 +3,7 @@ const ctx = wheel.getContext('2d');
 const wordInput = document.getElementById('wordInput');
 const addWordBtn = document.getElementById('addWordBtn');
 const spinBtn = document.getElementById('spinBtn');
+const resetBtn = document.getElementById('resetBtn');
 const modal = document.getElementById('winnerModal');
 const winnerEl = document.getElementById('winner');
 const closeBtn = document.querySelector('.close-btn');
@@ -80,6 +81,11 @@ function spin() {
     }
 }
 
+function reset() {
+    words = [];
+    drawWheel();
+}
+
 function showWinner(winner) {
     winnerEl.textContent = winner;
     modal.style.display = 'block';
@@ -91,6 +97,7 @@ function hideWinner() {
 
 addWordBtn.addEventListener('click', addWord);
 spinBtn.addEventListener('click', spin);
+resetBtn.addEventListener('click', reset);
 closeBtn.addEventListener('click', hideWinner);
 window.addEventListener('click', (event) => {
     if (event.target == modal) {

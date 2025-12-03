@@ -88,8 +88,8 @@ h1 {
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
-#addWordBtn,
-#spinBtn {
+#spinBtn,
+#resetBtn {
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
     font-weight: 600;
@@ -105,23 +105,40 @@ h1 {
 
 #addWordBtn {
     background: #ff6b6b;
+    border: 2px solid #a23b59; /* Darker red border */
 }
 
 #spinBtn {
     background: #5c7cfa;
 }
 
+#resetBtn {
+    background: #f06595;
+}
+
 #addWordBtn:hover,
-#spinBtn:hover {
+#spinBtn:hover,
+#resetBtn:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 #addWordBtn:active,
-#spinBtn:active {
+#spinBtn:active,
+#resetBtn:active {
     transform: translateY(0);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
+
+#addWordBtn:hover {
+    background: #e05c6b; /* Slightly darker red on hover */
+}
+
+#addWordBtn:focus-visible {
+    outline: 3px solid #a23b59; /* Focus indicator */
+    outline-offset: 2px;
+}
+
 
 .modal {
     display: none;
