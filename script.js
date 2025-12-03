@@ -73,8 +73,7 @@ function spin() {
         setTimeout(() => {
             const numSegments = words.length;
             const degreesPerSegment = 360 / numSegments;
-            const currentRotation = rotation % 360;
-            const winningSegment = Math.floor((360 - currentRotation + degreesPerSegment / 2) / degreesPerSegment) % numSegments;
+            const winningSegment = Math.floor((360 - (rotation % 360) + degreesPerSegment / 2) / degreesPerSegment) % numSegments;
             showWinner(words[winningSegment]);
             spinning = false;
         }, 4000); // Corresponds to the transition duration in CSS
