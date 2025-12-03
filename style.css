@@ -58,7 +58,7 @@ h1 {
 .pointer {
     position: absolute;
     top: 50%;
-    right: -40px;
+    right: -50px;
     transform: translateY(-50%);
     width: 0;
     height: 0;
