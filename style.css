@@ -225,3 +225,18 @@ h1 {
     justify-content: center;
     margin: 15px 0;
 }
+
+footer {
+    margin-top: auto; /* Pushes the footer to the bottom in a flex container */
+    padding: 2rem 1rem;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2); /* Slightly transparent background */
+}
+
+footer p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
