@@ -4,7 +4,6 @@ FateSpinner is a web application designed to [**briefly describe what FateSpinne
 
 ## Features
 
-*   [List key features, e.g., User authentication]
 *   [Interactive UI components]
 *   [Data visualization capabilities]
 *   [Any other significant functionalities]
