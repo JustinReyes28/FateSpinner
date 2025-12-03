@@ -1,0 +1,155 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Directory for web assets
+.sass-cache/
+connect.lock
+gulp-cached-tasks/
+jspm_packages/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Output of 'bundle install' with --path parameter
+vendor/bundle
+
+# Bower dependency directory (use with .bowerrc)
+bower_components
+
+# Build results
+dist/
+build/
+.coverage/
+generated/
+.nyc_output/
+
+# Logs
+logs
+*.log
+
+# Runtime data
+.DS_Store
+Thumbs.db
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
+.grunt
+
+# Bower: cache files
+bower-cache/
+bower-dest/
+bower-tmp/
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons (https://nodejs.org/api/addons.html)
+build/Release
+
+# Dependency directories (untracked)
+jspm_packages/
+
+# TypeScript output
+*.tsbuildinfo
+dist/
+out/
+out-tsc/
+
+# System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+iTunesDB
+Thumbs.db
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+iTunesDB
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+iTunesDB
+Thumbs.db
+
+# Platform-specific files
+*.dll
+*.exe
+*.o
+*.so
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.pytest_cache/
+.coverage
+
+# Mac
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+iTunesDB
+Thumbs.db
+
+# Windows
+Thumbs.db
+ehthumbs.db
+*:2e:*
+*.lnk
+
+# Linux
+*~
+.DS_Store
+.directory
+*.history
