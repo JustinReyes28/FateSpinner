@@ -85,26 +85,45 @@ function spin() {
     if (!spinning) {
         spinning = true;
 
+        // Disable the spin button during spinning
+        spinBtn.disabled = true;
+        spinBtn.classList.add('disabled');
+
+        // Calculate random number of full rotations (3-8) plus a random final position
         const numSegments = words.length;
         const degreesPerSegment = 360 / numSegments;
+        const minRotations = 3;
+        const maxRotations = 8;
+        const extraRotations = Math.random() * (maxRotations - minRotations) + minRotations;
 
-        // Determine the winning segment beforehand
+        // Random final position within a segment to make it more realistic
+        const randomFinalOffset = Math.random() * degreesPerSegment;
+
+        // Calculate target rotation (number of full rotations + offset to winning segment)
         const winningSegmentIndex = Math.floor(Math.random() * numSegments);
+        const winningOffset = winningSegmentIndex * degreesPerSegment;
+
+        // Target rotation is the number of full rotations minus the offset to the winning segment
+        // (subtracting because we want the winning segment to end up at the top)
+        const targetRotation = rotation + (extraRotations * 360) + randomFinalOffset - winningOffset;
+
+        // Store the winning word for later use
         const winner = words[winningSegmentIndex];
 
-        // Calculate the rotation to center the winning segment at the top
-        const winningAngle = winningSegmentIndex * degreesPerSegment;
-        const randomOffsetWithinSegment = (Math.random() - 0.5) * degreesPerSegment * 0.8;
-        const targetRotation = 360 * 5 - winningAngle + randomOffsetWithinSegment - degreesPerSegment / 2;
-
-
+        // Apply the rotation with CSS transition for smooth animation
         rotation = targetRotation;
+        wheel.style.transition = 'transform 4s cubic-bezier(0.23, 1, 0.32, 1)'; // Custom easing for deceleration
         wheel.style.transform = `rotate(${rotation}deg)`;
 
+        // After the animation completes, show the winner
         setTimeout(() => {
             showWinner(winner);
             spinning = false;
-        }, 4000); // Corresponds to the transition duration in CSS
+
+            // Re-enable the spin button
+            spinBtn.disabled = words.length < 2;
+            spinBtn.classList.remove('disabled');
+        }, 4000); // Matches CSS transition duration
     }
 }
 

@@ -46,6 +46,8 @@ h1 {
     justify-content: center;
 }
 
+
+
 #wheel {
     width: 100%;
     height: 100%;
@@ -235,9 +237,7 @@ footer p {
         height: 350px;
     }
 
-    .pointer {
-        right: -40px;
-    }
+
 
     h1 {
         font-size: 2.5rem;
@@ -259,9 +259,7 @@ footer p {
         height: 300px;
     }
 
-    .pointer {
-        right: -30px;
-    }
+
 
     h1 {
         font-size: 2rem;
