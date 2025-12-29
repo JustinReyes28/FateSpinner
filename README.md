@@ -6,6 +6,12 @@ FateSpinner is a distraction-free web application designed to help you make choi
 
 [**Live Demo**](https://justinreyes28.github.io/FateSpinner/)
 
+### Application Screenshots
+
+<p align="center">
+  <img src="images/img1.png" alt="FateSpinner Interface" width="500"> <img src="images/img2.png" alt="FateSpinner Spinning Wheel" width="500">
+</p>
+
 ---
 
 ## ✦ Key Features
@@ -44,11 +50,6 @@ Built with **Zero Dependencies** to ensure performance and longevity:
 2. **Populate**: Click "Add Word" (or press Enter) to see the wheel update instantly.
 3. **Spin**: Hit the "Spin" button and let fate decide.
 4. **Reset**: Use the "reset" link to clear the slate.
-
-### Application Screenshots
-
-![FateSpinner Interface](images/img1.png)
-![FateSpinner Spinning Wheel](images/img2.png)
 
 ## ✦ License
 
