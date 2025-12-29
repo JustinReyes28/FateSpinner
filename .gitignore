@@ -153,3 +153,6 @@ ehthumbs.db
 .DS_Store
 .directory
 *.history
+
+# Random
+SECURITY_ANALYSIS.md
