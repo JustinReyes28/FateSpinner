@@ -1,164 +1,182 @@
+/**
+ * FateSpinner - Minimalist Core Logic
+ * Handles dynamic segments via conic-gradient and CSS transitions for rotation.
+ */
+
+const state = {
+    items: [],
+    isSpinning: false,
+    currentRotation: 0
+};
+
+// UI Elements
 const wheel = document.getElementById('wheel');
-const ctx = wheel.getContext('2d');
+const spinBtn = document.getElementById('spinBtn');
 const wordInput = document.getElementById('wordInput');
 const addWordBtn = document.getElementById('addWordBtn');
-const spinBtn = document.getElementById('spinBtn');
+const itemsList = document.getElementById('itemsList');
 const resetBtn = document.getElementById('resetBtn');
-const modal = document.getElementById('winnerModal');
-const winnerEl = document.getElementById('winner');
-const closeBtn = document.querySelector('.close-btn');
+const resultOverlay = document.getElementById('resultOverlay');
+const winnerName = document.getElementById('winnerName');
+const closeResult = document.getElementById('closeResult');
 
+/**
+ * Update UI and Wheel segments
+ */
+function render() {
+    // 1. Update Buttons
+    spinBtn.disabled = state.items.length < 2 || state.isSpinning;
 
-let words = [];
-let spinning = false;
-let rotation = 0;
+    // 2. Render List
+    itemsList.innerHTML = '';
+    state.items.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.className = 'item-chip';
+        li.innerHTML = `
+            <span>${item}</span>
+            <button class="remove-btn" onclick="removeItem(${index})" aria-label="Remove ${item}">&times;</button>
+        `;
+        itemsList.appendChild(li);
+    });
 
-// Function to check input and enable/disable spin button accordingly
-function checkInput() {
-    const word = wordInput.value.trim();
+    // 3. Clear existing text labels
+    wheel.querySelectorAll('.wheel-text').forEach(el => el.remove());
 
-
-    // Enable spin button if there are at least 2 words
-    if (words.length >= 2) {
-        spinBtn.disabled = false;
-        spinBtn.classList.remove('disabled');
+    // 4. Update Wheel Gradient
+    if (state.items.length === 0) {
+        wheel.style.background = 'var(--accent)';
+    } else if (state.items.length === 1) {
+        wheel.style.background = 'var(--white)';
     } else {
-        spinBtn.disabled = true;
-        spinBtn.classList.add('disabled');
+        const step = 100 / state.items.length;
+        // Use an alternating neutral palette for segments
+        const colors = ['#FFFFFF', '#F0F0EE', '#E8E8E3', '#E0E0DB'];
+
+        let gradientParts = state.items.map((_, i) => {
+            const color = colors[i % colors.length];
+            return `${color} ${i * step}% ${(i + 1) * step}%`;
+        });
+
+        wheel.style.background = `conic-gradient(${gradientParts.join(', ')})`;
+
+        // Render Text Labels
+        state.items.forEach((item, i) => {
+            const label = document.createElement('div');
+            label.className = 'wheel-text';
+            label.textContent = item;
+
+            // Calculate angle: Start of segment + half of segment size
+            const segmentAngle = 360 / state.items.length;
+            const angle = (i * segmentAngle) + (segmentAngle / 2);
+
+            // Rotate to angle, then move out to radius
+            // We rotate -90deg first because 0deg is usually 3 o'clock in CSS transform, but we want top.
+            // Actually, for the text to radiate out:
+            // Rotate to the angle.
+            // Translate X (outward). 
+            // Note: conic-gradient starts at 12 o'clock (0deg).
+            // CSS transform rotate(0deg) points to 12 o'clock if we assume standard flow? 
+            // Let's standardise: origin is center.
+            // rotate(angle) turns it. translate(radius/2) pushes it out.
+
+            // Adjust angle: our conic gradient starts at 0deg (top).
+            // CSS rotation usually starts 0deg (top) if element is top-left aligned? No, standard 0 is usually right if using polar, but here we invoke transform.
+            // Let's assume 0deg is TOP.
+
+            label.style.transform = `rotate(${angle}deg) translateY(-50%) translateX(60px)`;
+            // translateX moves it "right" relative to the rotation. 
+            // If angle is 0 (top), "right" is... right. We want "up"?
+            // Wait, transform order: rotate -> translate.
+            // If items are at 0deg (top segment), we want text at top.
+            // rotate(-90deg) would put "X" axis pointing up.
+
+            // refined: rotate(angle - 90deg) makes X axis match the segment direction (assuming 0 is top)
+            label.style.transform = `rotate(${angle - 90}deg) translateX(70px)`;
+            // -90 so that 0deg segment (top) has text rotated to -90 (pointing up) -> translateX moves it up.
+
+            wheel.appendChild(label);
+        });
     }
 }
 
-function drawWheel() {
-    const numSegments = words.length;
-    const anglePerSegment = (2 * Math.PI) / numSegments;
-
-    // Set canvas size based on its container
-    const container = document.querySelector('.container');
-    wheel.width = container.clientWidth;
-    wheel.height = container.clientHeight;
-    const radius = wheel.width / 2 - 10;
-    const center = wheel.width / 2;
-
-
-    ctx.clearRect(0, 0, wheel.width, wheel.height);
-
-    for (let i = 0; i < numSegments; i++) {
-        const startAngle = i * anglePerSegment;
-        const endAngle = (i + 1) * anglePerSegment;
-
-        ctx.beginPath();
-        ctx.moveTo(center, center);
-        ctx.arc(center, center, radius, startAngle, endAngle);
-        ctx.closePath();
-
-        ctx.fillStyle = `hsl(${(i * 360) / numSegments}, 70%, 80%)`;
-        ctx.fill();
-        ctx.stroke();
-
-        ctx.save();
-        ctx.translate(center, center);
-        ctx.rotate(startAngle + anglePerSegment / 2);
-        ctx.textAlign = 'right';
-        ctx.fillStyle = '#333';
-        ctx.font = `bold ${radius / 10}px sans-serif`;
-        ctx.fillText(words[i], radius - 15, 10);
-        ctx.restore();
-    }
-}
-
-function addWord() {
-    const word = wordInput.value.trim();
-    if (word) {
-        words.push(word);
+/**
+ * Add item to list
+ */
+function addItem() {
+    const value = wordInput.value.trim();
+    if (value && !state.isSpinning) {
+        state.items.push(value);
         wordInput.value = '';
-        drawWheel();
-        checkInput(); // Update input validation after adding word
+        render();
     }
 }
 
+/**
+ * Remove item from list
+ */
+window.removeItem = (index) => {
+    if (!state.isSpinning) {
+        state.items.splice(index, 1);
+        render();
+    }
+};
+
+/**
+ * Perform spin
+ */
 function spin() {
-    if (words.length < 2) {
-        alert('Please add at least two words to the wheel.');
-        return;
-    }
+    if (state.isSpinning || state.items.length < 2) return;
 
-    if (!spinning) {
-        spinning = true;
+    state.isSpinning = true;
+    spinBtn.disabled = true;
 
-        // Disable the spin button during spinning
-        spinBtn.disabled = true;
-        spinBtn.classList.add('disabled');
+    // Randomize rotation: 5-8 full spins + random offset
+    const extraSpins = 5 + Math.floor(Math.random() * 4);
+    const randomOffset = Math.random() * 360;
+    state.currentRotation += (extraSpins * 360) + randomOffset;
 
-        // Calculate random number of full rotations (3-8) plus a random final position
-        const numSegments = words.length;
-        const degreesPerSegment = 360 / numSegments;
-        const minRotations = 3;
-        const maxRotations = 8;
-        const extraRotations = Math.random() * (maxRotations - minRotations) + minRotations;
+    wheel.style.transform = `rotate(${state.currentRotation}deg)`;
 
-        // Random final position within a segment to make it more realistic
-        const randomFinalOffset = Math.random() * degreesPerSegment;
+    // Calculate result after transition
+    setTimeout(() => {
+        state.isSpinning = false;
 
-        // Calculate target rotation (number of full rotations + offset to winning segment)
-        const winningSegmentIndex = Math.floor(Math.random() * numSegments);
-        const winningOffset = winningSegmentIndex * degreesPerSegment;
+        // Final angle normalization (relative to arrow at 0 deg / top center)
+        // Wheel rotates clockwise, so the index at top is (360 - (currentRotation % 360)) / (360 / items.length)
+        const totalItems = state.items.length;
+        const normalizedAngle = (360 - (state.currentRotation % 360)) % 360;
+        const winnerIndex = Math.floor(normalizedAngle / (360 / totalItems));
 
-        // Target rotation is the number of full rotations minus the offset to the winning segment
-        // (subtracting because we want the winning segment to end up at the top)
-        const targetRotation = rotation + (extraRotations * 360) + randomFinalOffset - winningOffset;
-
-        // Store the winning word for later use
-        const winner = words[winningSegmentIndex];
-
-        // Apply the rotation with CSS transition for smooth animation
-        rotation = targetRotation;
-        wheel.style.transition = 'transform 4s cubic-bezier(0.23, 1, 0.32, 1)'; // Custom easing for deceleration
-        wheel.style.transform = `rotate(${rotation}deg)`;
-
-        // After the animation completes, show the winner
-        setTimeout(() => {
-            showWinner(winner);
-            spinning = false;
-
-            // Re-enable the spin button
-            spinBtn.disabled = words.length < 2;
-            spinBtn.classList.remove('disabled');
-        }, 4000); // Matches CSS transition duration
-    }
+        showResult(state.items[winnerIndex]);
+        render(); // Re-enable button
+    }, 4000); // Matches CSS transition duration
 }
 
-function reset() {
-    words = [];
-    drawWheel();
-    checkInput(); // Update button state after reset
+function showResult(winner) {
+    winnerName.textContent = winner;
+    resultOverlay.classList.remove('hidden');
 }
 
-function showWinner(winner) {
-    winnerEl.textContent = winner;
-    modal.style.display = 'block';
-}
+/**
+ * Events
+ */
+addWordBtn.addEventListener('click', addItem);
+wordInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') addItem();
+});
 
-function hideWinner() {
-    modal.style.display = 'none';
-}
-
-addWordBtn.addEventListener('click', addWord);
 spinBtn.addEventListener('click', spin);
-resetBtn.addEventListener('click', reset);
-closeBtn.addEventListener('click', hideWinner);
-window.addEventListener('click', (event) => {
-    if (event.target == modal) {
-        hideWinner();
+
+resetBtn.addEventListener('click', () => {
+    if (!state.isSpinning) {
+        state.items = [];
+        render();
     }
 });
 
-// Add event listeners for input field
-wordInput.addEventListener('input', checkInput);
-wordInput.addEventListener('propertychange', checkInput); // For older browsers
+closeResult.addEventListener('click', () => {
+    resultOverlay.classList.add('hidden');
+});
 
-window.addEventListener('resize', drawWheel);
-
-// Initialize the input check
-checkInput();
-
-drawWheel();
+// Initial Render
+render();

@@ -1,37 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FateSpinner</title>
+    <meta name="description"
+        content="A clean, minimalist random choice spinner featuring a hand-crafted neutral aesthetic.">
+    <title>FateSpinner — Intentionally Simple</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Work+Sans:wght@300;400&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <h1>FateSpinner</h1>
-    <div class="container">
-        <div class="pointer"></div>
-        <canvas id="wheel" width="400" height="400"></canvas>
-    </div>
-    <div class="controls">
-        <input type="text" id="wordInput" placeholder="Enter a word" required>
-        <div class="button-group">
-            <button id="addWordBtn">Add Word</button>
-            <button id="spinBtn" disabled>Spin</button>
-            <button id="resetBtn">Reset</button>
-        </div>
 
-    </div>
-    <div id="winnerModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>The Winner Is:</h2>
-            <p id="winner"></p>
+<body>
+    <main class="app-container">
+        <header class="header">
+            <h1 class="title">FateSpinner</h1>
+            <p class="subtitle">Minimal wheel of chance</p>
+        </header>
+
+        <section class="spinner-section">
+            <div class="wheel-outer">
+                <div class="pointer"></div>
+                <div id="wheel" class="wheel"></div>
+                <div class="wheel-center"></div>
+            </div>
+
+            <div class="action-container">
+                <button id="spinBtn" class="btn btn-primary" aria-label="Spin the wheel">Spin</button>
+            </div>
+        </section>
+
+        <section class="controls-section">
+            <div class="input-group">
+                <input type="text" id="wordInput" placeholder="Add an item..." autocomplete="off">
+                <button id="addWordBtn" class="btn btn-secondary">Add</button>
+            </div>
+
+            <div class="items-list-container">
+                <ul id="itemsList" class="items-list">
+                    <!-- Items will appear here -->
+                </ul>
+                <button id="resetBtn" class="btn btn-ghost">Clear All</button>
+            </div>
+        </section>
+    </main>
+
+    <div id="resultOverlay" class="result-overlay hidden">
+        <div class="result-content">
+            <p class="result-label">Selected</p>
+            <h2 id="winnerName" class="winner-name"></h2>
+            <button id="closeResult" class="btn btn-secondary">Done</button>
         </div>
     </div>
-    <footer>
-        <p>&copy; 2025 FateSpinner. All rights reserved.</p>
-        <p>Created by Justin Reyes.</p>
-    </footer>
+
     <script src="script.js"></script>
 </body>
+
 </html>
