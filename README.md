@@ -45,6 +45,11 @@ Built with **Zero Dependencies** to ensure performance and longevity:
 3. **Spin**: Hit the "Spin" button and let fate decide.
 4. **Reset**: Use the "reset" link to clear the slate.
 
+### Application Screenshots
+
+![FateSpinner Interface](images/img1.png)
+![FateSpinner Spinning Wheel](images/img2.png)
+
 ## ✦ License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
