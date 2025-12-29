@@ -39,8 +39,8 @@ function render() {
         itemsList.appendChild(li);
     });
 
-    // 3. Clear existing text labels
-    wheel.querySelectorAll('.wheel-text').forEach(el => el.remove());
+    // 3. Clear existing text labels and separators
+    wheel.querySelectorAll('.wheel-text, .wheel-separator').forEach(el => el.remove());
 
     // 4. Update Wheel Gradient
     if (state.items.length === 0) {
@@ -96,6 +96,15 @@ function render() {
 
             wheel.appendChild(label);
         });
+
+        // 6. Add separator lines between segments
+        const segmentAngle = 360 / state.items.length;
+        for (let i = 0; i < state.items.length; i++) {
+            const line = document.createElement('div');
+            line.className = 'wheel-separator';
+            line.style.transform = `rotate(${i * segmentAngle - 90}deg)`;
+            wheel.appendChild(line);
+        }
     }
 }
 

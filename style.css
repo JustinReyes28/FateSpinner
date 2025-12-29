@@ -118,6 +118,17 @@ body {
     align-items: center;
 }
 
+.wheel-separator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 1px;
+    background-color: var(--text-main);
+    transform-origin: 0 50%;
+    opacity: 0.3;
+}
+
 .wheel-center {
     position: absolute;
     width: 12px;
@@ -155,7 +166,7 @@ input[type="text"] {
 }
 
 input[type="text"]::placeholder {
-    color: var(--border-color);
+    color: var(--text-main);
 }
 
 /* Buttons */

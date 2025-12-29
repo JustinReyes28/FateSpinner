@@ -1,38 +1,53 @@
 # FateSpinner
 
-## Spin Your Destiny: A Customizable Wheel of Fortune
+> A minimalist, monochromatic decision-maker.
 
-FateSpinner is an interactive web application that allows users to create a custom "wheel of fortune" by adding their own words or choices. Spin the wheel to get a random result, making decisions fun and engaging.
+FateSpinner is a distraction-free web application designed to help you make choices with clarity and style. Focused on typography and fluid interaction, it transforms the classic "wheel of fortune" into a human-crafted digital experience.
 
-### Live Demo
-Experience FateSpinner live: [https://justinreyes28.github.io/FateSpinner/](https://justinreyes28.github.io/FateSpinner/)
+[**Live Demo**](https://justinreyes28.github.io/FateSpinner/)
 
-### Features
+---
 
-*   **Dynamic Wheel Generation:** Add any number of words, and the wheel dynamically adjusts its segments.
-*   **Interactive Spinning:** A visually engaging spin animation with a random outcome.
-*   **Customizable Choices:** Easily add and manage words or options on the wheel.
-*   **Clear Winner Display:** A modal prominently announces the winning choice.
-*   **Responsive Design:** Adapts seamlessly to various screen sizes.
-*   **Vibrant User Interface:** Modern aesthetics with a dynamic gradient background and smooth animations.
+## ✦ Key Features
 
-### How to Use
+- **Dynamic Wheel Logic**: Real-time segment generation using `conic-gradient`.
+- **Typographic Focus**: Clean aesthetics powered by *Inter* and *Work Sans*.
+- **Liquid Animation**: Smooth, momentum-based spin mechanics.
+- **Minimalist Interface**: A monochromatic design that eliminates visual noise.
+- **Responsive by Design**: Seamlessly scales from desktop to mobile screens.
 
-1.  **Enter Words:** Type a word or phrase into the input field.
-2.  **Add to Wheel:** Click the "Add Word" button to add your entry to the wheel. Repeat for all your desired choices. (Ensure at least two words are added to enable spinning).
-3.  **Spin the Wheel:** Click the "Spin" button to set the wheel in motion.
-4.  **Discover Your Fate:** The wheel will come to a stop, and a modal will reveal the winning word.
-5.  **Reset:** Use the "Reset" button to clear all words from the wheel and start anew.
+## ✦ Design Philosophy
 
-### Technical Details
+FateSpinner is built on the principle of **"less is more."** 
+- **Monochromatic Palette**: Utilizing a range of grays and whites to focus on the result, not the colors.
+- **Flat UI**: Avoiding heavy shadows and gradients in favor of a clean, hand-crafted feel.
+- **Motion with Meaning**: Using easing functions that mimic physical momentum.
 
-FateSpinner is built using standard web technologies:
-*   **HTML5:** For structuring the application content.
-*   **CSS3:** Provides the vibrant styling, responsive layout (using Flexbox), and animations (gradient background, wheel rotation, button effects).
-*   **JavaScript:** Powers the core logic, including dynamic canvas drawing, user input handling, wheel spin mechanics, random winner determination, and modal interactions.
+## ✦ Tech Stack
 
-### Development
+Built with **Zero Dependencies** to ensure performance and longevity:
+- **HTML5**: Semantic structure.
+- **CSS3**: Custom properties, Flexbox, and sophisticated transitions.
+- **Vanilla JavaScript**: Core logic for randomization, state management, and DOM manipulation.
 
-To run FateSpinner locally:
-1.  Clone the repository.
-2.  Open `index.html` in your web browser.
+## ✦ Getting Started
+
+### Local Setup
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/JustinReyes28/FateSpinner.git
+   ```
+2. Open `index.html` in any modern web browser.
+
+### How to Spin
+1. **Input**: Add your options in the input field.
+2. **Populate**: Click "Add Word" (or press Enter) to see the wheel update instantly.
+3. **Spin**: Hit the "Spin" button and let fate decide.
+4. **Reset**: Use the "reset" link to clear the slate.
+
+## ✦ License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+*Created with care by [Justin Reyes](https://github.com/JustinReyes28)*
