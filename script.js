@@ -34,7 +34,7 @@ function render() {
         li.className = 'item-chip';
         li.innerHTML = `
             <span>${item}</span>
-            <button class="remove-btn" onclick="removeItem(${index})" aria-label="Remove ${item}">&times;</button>
+            <button class="remove-btn" data-index="${index}" aria-label="Remove ${item}">&times;</button>
         `;
         itemsList.appendChild(li);
     });
@@ -69,26 +69,10 @@ function render() {
             const segmentAngle = 360 / state.items.length;
             const angle = (i * segmentAngle) + (segmentAngle / 2);
 
-            // Rotate to angle, then move out to radius
-            // We rotate -90deg first because 0deg is usually 3 o'clock in CSS transform, but we want top.
-            // Actually, for the text to radiate out:
-            // Rotate to the angle.
-            // Translate X (outward). 
-            // Note: conic-gradient starts at 12 o'clock (0deg).
-            // CSS transform rotate(0deg) points to 12 o'clock if we assume standard flow? 
-            // Let's standardise: origin is center.
-            // rotate(angle) turns it. translate(radius/2) pushes it out.
 
-            // Adjust angle: our conic gradient starts at 0deg (top).
-            // CSS rotation usually starts 0deg (top) if element is top-left aligned? No, standard 0 is usually right if using polar, but here we invoke transform.
-            // Let's assume 0deg is TOP.
 
             label.style.transform = `rotate(${angle}deg) translateY(-50%) translateX(60px)`;
-            // translateX moves it "right" relative to the rotation. 
-            // If angle is 0 (top), "right" is... right. We want "up"?
-            // Wait, transform order: rotate -> translate.
-            // If items are at 0deg (top segment), we want text at top.
-            // rotate(-90deg) would put "X" axis pointing up.
+
 
             // refined: rotate(angle - 90deg) makes X axis match the segment direction (assuming 0 is top)
             label.style.transform = `rotate(${angle - 90}deg) translateX(70px)`;
@@ -123,12 +107,12 @@ function addItem() {
 /**
  * Remove item from list
  */
-window.removeItem = (index) => {
+function removeItem(index) {
     if (!state.isSpinning) {
         state.items.splice(index, 1);
         render();
     }
-};
+}
 
 /**
  * Perform spin
@@ -175,6 +159,14 @@ wordInput.addEventListener('keypress', (e) => {
 });
 
 spinBtn.addEventListener('click', spin);
+
+// Event delegation for remove buttons
+itemsList.addEventListener('click', (e) => {
+    if (e.target.classList.contains('remove-btn')) {
+        const index = parseInt(e.target.getAttribute('data-index'), 10);
+        removeItem(index);
+    }
+});
 
 resetBtn.addEventListener('click', () => {
     if (!state.isSpinning) {
