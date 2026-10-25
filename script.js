@@ -15,7 +15,7 @@
     function saveChoices() {
         try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state.items));
-            elements.saveNotice.textContent = 'Choices are saved in this browser.';
+            elements.saveNotice.textContent = 'Saved in this browser.';
         } catch {
             elements.saveNotice.textContent = 'Browser storage is unavailable. Keep this tab open to retain your choices.';
         }
@@ -34,7 +34,8 @@
         const count = state.items.length;
         elements.spinBtn.disabled = count < 2 || state.isSpinning;
         elements.spinBtn.firstChild.textContent = state.isSpinning ? 'Choosing… ' : 'Spin the wheel ';
-        elements.spinHint.textContent = state.isSpinning ? 'A decision is on its way…' : count < 2 ? `Add ${2 - count} ${count === 1 ? 'more choice' : 'choices'} to get started.` : `${count} entries. One decision. Give it a spin.`;
+        elements.spinHint.hidden = count >= 2 && !state.isSpinning;
+        elements.spinHint.textContent = state.isSpinning ? 'Spinning…' : count < 2 ? `Add ${2 - count} ${count === 1 ? 'more choice' : 'choices'} to spin.` : '';
         elements.wordInput.disabled = state.isSpinning;
         elements.addWordBtn.disabled = state.isSpinning;
         elements.resetBtn.disabled = !count || state.isSpinning;
