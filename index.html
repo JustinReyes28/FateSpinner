@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none';">
     <meta name="referrer" content="no-referrer">
     <meta name="theme-color" content="#f3f6fb">
-    <title>FateSpinner — Leave it to the wheel</title>
+    <title>FateSpinner</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="style.css">
     <script src="spinner-core.js" defer></script>
@@ -17,17 +17,12 @@
     <main class="app-container">
         <header class="header">
             <a class="wordmark" href="./" aria-label="FateSpinner home"><span class="brand-mark" aria-hidden="true"></span>FateSpinner</a>
-            <p class="header-note">A little less overthinking.</p>
         </header>
 
         <div class="workspace">
             <section class="spinner-section" aria-labelledby="spinnerHeading">
-                <div class="section-intro">
-                    <p class="eyebrow">Let chance choose</p>
-                    <h1 id="spinnerHeading">Leave it to<br>the wheel.</h1>
-                    <p class="subtitle">Lunch plans, team picks, or your next adventure.</p>
-                    <a id="editChoicesLink" class="mobile-edit-link" href="#wordInput">Add your choices <span aria-hidden="true">↓</span></a>
-                </div>
+                <h1 id="spinnerHeading" class="sr-only">Decision wheel</h1>
+                <a id="editChoicesLink" class="mobile-edit-link" href="#wordInput">Add your choices <span aria-hidden="true">↓</span></a>
                 <div class="wheel-outer" aria-hidden="true">
                     <div class="pointer"></div>
                     <div class="wheel-clip"><div id="wheel" class="wheel"></div></div>
@@ -35,14 +30,14 @@
                 </div>
                 <div class="action-container">
                     <button id="spinBtn" class="btn btn-primary" type="button" disabled>Spin the wheel <span aria-hidden="true">↗</span></button>
-                    <p id="spinHint" class="spin-hint">Add at least 2 choices to get started.</p>
+                    <p id="spinHint" class="spin-hint">Add 2 choices to spin.</p>
                     <p id="lastPick" class="last-pick" hidden></p>
                 </div>
             </section>
 
             <section class="controls-section" aria-labelledby="choicesHeading">
                 <div class="panel-heading">
-                    <div><p class="eyebrow">Make room for possibility</p><h2 id="choicesHeading">Your choices</h2></div>
+                    <h2 id="choicesHeading">Your choices</h2>
                     <span id="itemCount" class="count-badge">0 entries</span>
                 </div>
                 <form id="choiceForm" novalidate>
@@ -58,24 +53,22 @@
                 <div class="list-heading"><h3>On the wheel</h3><button id="resetBtn" class="btn btn-text" type="button" disabled>Clear all</button></div>
                 <div id="emptyState" class="empty-state">
                     <span class="empty-wheel" aria-hidden="true"></span>
-                    <p>Every good spin starts with a few options.</p>
                     <button id="exampleBtn" class="btn btn-text" type="button">Try a lunch list <span aria-hidden="true">→</span></button>
                 </div>
                 <ol id="itemsList" class="items-list" aria-label="Choices on the wheel"></ol>
                 <div class="list-footer">
-                    <p id="saveNotice">Choices are saved in this browser.</p>
+                    <p id="saveNotice">Saved in this browser.</p>
                     <button id="undoBtn" class="btn btn-text" type="button" hidden>Undo clear</button>
                 </div>
             </section>
         </div>
-        <footer class="footer"><span>No accounts. No ads. Just a decision.</span><span>Each entry gets an equal chance.</span></footer>
         <p id="statusMessage" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
         <noscript><p class="noscript-message">Enable JavaScript to add choices and spin the wheel.</p></noscript>
     </main>
 
     <dialog id="resultDialog" class="result-dialog" aria-labelledby="resultHeading winnerName" aria-describedby="resultDetail">
         <div class="result-content">
-            <p class="eyebrow" id="resultHeading">The wheel has spoken</p>
+            <p class="result-label" id="resultHeading">Result</p>
             <h2 id="winnerName" class="winner-name"></h2>
             <p id="resultDetail" class="result-detail"></p>
             <button id="spinAgainBtn" class="btn btn-primary" type="button" autofocus>Spin again <span aria-hidden="true">↗</span></button>
