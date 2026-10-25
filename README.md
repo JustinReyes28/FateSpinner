@@ -15,6 +15,14 @@ A small, private decision wheel. Add your options, spin, and let chance choose.
 - Keyboard-accessible result dialog, visible focus indicators, and reduced-motion support.
 - No dependencies, remote fonts, accounts, analytics, or third-party requests.
 
+### Application Screenshots
+
+<p align="center">
+  <img src="images/img1.png" alt="FateSpinner Interface" width="500"> <img src="images/img2.png" alt="FateSpinner Spinning Wheel" width="500">
+</p>
+
+---
+
 The wheel supports 2–60 entries, with up to 80 characters per choice. Long labels are shortened on the wheel; the complete text remains in the list and result. Wheels with 13–24 entries use list numbers, and larger wheels show segments without labels to avoid overlap.
 
 ## Run locally
