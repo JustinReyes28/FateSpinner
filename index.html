@@ -1,70 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="A clean, minimalist random choice spinner featuring a hand-crafted neutral aesthetic.">
-    <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://fonts.googleapis.com;">
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="DENY">
-    <meta http-equiv="Referrer-Policy" content="no-referrer-when-downgrade">
-
-    <title>FateSpinner — Intentionally Simple</title>
+    <meta name="description" content="Add your choices, spin the wheel, and make a decision. A free, private random picker with saved lists and no downloads.">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none';">
+    <meta name="referrer" content="no-referrer">
+    <meta name="theme-color" content="#f3f6fb">
+    <title>FateSpinner — Leave it to the wheel</title>
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Work+Sans:wght@300;400&display=swap"
-        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="spinner-core.js" defer></script>
+    <script src="script.js" defer></script>
 </head>
-
 <body>
     <main class="app-container">
         <header class="header">
-            <h1 class="title">FateSpinner</h1>
-            <p class="subtitle">Minimal wheel of chance</p>
+            <a class="wordmark" href="./" aria-label="FateSpinner home"><span class="brand-mark" aria-hidden="true"></span>FateSpinner</a>
+            <p class="header-note">A little less overthinking.</p>
         </header>
 
-        <section class="spinner-section">
-            <div class="wheel-outer">
-                <div class="pointer"></div>
-                <div id="wheel" class="wheel"></div>
-                <div class="wheel-center"></div>
-            </div>
+        <div class="workspace">
+            <section class="spinner-section" aria-labelledby="spinnerHeading">
+                <div class="section-intro">
+                    <p class="eyebrow">Let chance choose</p>
+                    <h1 id="spinnerHeading">Leave it to<br>the wheel.</h1>
+                    <p class="subtitle">Lunch plans, team picks, or your next adventure.</p>
+                    <a id="editChoicesLink" class="mobile-edit-link" href="#wordInput">Add your choices <span aria-hidden="true">↓</span></a>
+                </div>
+                <div class="wheel-outer" aria-hidden="true">
+                    <div class="pointer"></div>
+                    <div class="wheel-clip"><div id="wheel" class="wheel"></div></div>
+                    <div class="wheel-center"><span id="wheelCenter">?</span></div>
+                </div>
+                <div class="action-container">
+                    <button id="spinBtn" class="btn btn-primary" type="button" disabled>Spin the wheel <span aria-hidden="true">↗</span></button>
+                    <p id="spinHint" class="spin-hint">Add at least 2 choices to get started.</p>
+                    <p id="lastPick" class="last-pick" hidden></p>
+                </div>
+            </section>
 
-            <div class="action-container">
-                <button id="spinBtn" class="btn btn-primary" aria-label="Spin the wheel">Spin</button>
-            </div>
-        </section>
-
-        <section class="controls-section">
-            <div class="input-group">
-                <input type="text" id="wordInput" placeholder="Add an item..." autocomplete="off">
-                <button id="addWordBtn" class="btn btn-secondary">Add</button>
-            </div>
-
-            <div class="items-list-container">
-                <ul id="itemsList" class="items-list">
-                    <!-- Items will appear here -->
-                </ul>
-                <button id="resetBtn" class="btn btn-ghost">Clear All</button>
-            </div>
-        </section>
+            <section class="controls-section" aria-labelledby="choicesHeading">
+                <div class="panel-heading">
+                    <div><p class="eyebrow">Make room for possibility</p><h2 id="choicesHeading">Your choices</h2></div>
+                    <span id="itemCount" class="count-badge">0 entries</span>
+                </div>
+                <form id="choiceForm" novalidate>
+                    <label for="wordInput">Add one or a few</label>
+                    <p id="inputHint" class="field-hint">One choice per line. Up to 60 entries, 80 characters each.</p>
+                    <textarea id="wordInput" rows="3" maxlength="5000" placeholder="Pizza&#10;Sushi&#10;Something new" aria-describedby="inputHint inputError" autocomplete="off" spellcheck="false"></textarea>
+                    <p id="inputError" class="input-error" role="alert" hidden></p>
+                    <div class="form-actions">
+                        <span class="shortcut-hint">Ctrl / ⌘ + Enter to add</span>
+                        <button id="addWordBtn" class="btn btn-secondary" type="submit">Add choices <span aria-hidden="true">+</span></button>
+                    </div>
+                </form>
+                <div class="list-heading"><h3>On the wheel</h3><button id="resetBtn" class="btn btn-text" type="button" disabled>Clear all</button></div>
+                <div id="emptyState" class="empty-state">
+                    <span class="empty-wheel" aria-hidden="true"></span>
+                    <p>Every good spin starts with a few options.</p>
+                    <button id="exampleBtn" class="btn btn-text" type="button">Try a lunch list <span aria-hidden="true">→</span></button>
+                </div>
+                <ol id="itemsList" class="items-list" aria-label="Choices on the wheel"></ol>
+                <div class="list-footer">
+                    <p id="saveNotice">Choices are saved in this browser.</p>
+                    <button id="undoBtn" class="btn btn-text" type="button" hidden>Undo clear</button>
+                </div>
+            </section>
+        </div>
+        <footer class="footer"><span>No accounts. No ads. Just a decision.</span><span>Each entry gets an equal chance.</span></footer>
+        <p id="statusMessage" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+        <noscript><p class="noscript-message">Enable JavaScript to add choices and spin the wheel.</p></noscript>
     </main>
 
-    <div id="resultOverlay" class="result-overlay hidden">
+    <dialog id="resultDialog" class="result-dialog" aria-labelledby="resultHeading winnerName" aria-describedby="resultDetail">
         <div class="result-content">
-            <p class="result-label">Selected</p>
+            <p class="eyebrow" id="resultHeading">The wheel has spoken</p>
             <h2 id="winnerName" class="winner-name"></h2>
-            <button id="closeResult" class="btn btn-secondary">Done</button>
+            <p id="resultDetail" class="result-detail"></p>
+            <button id="spinAgainBtn" class="btn btn-primary" type="button" autofocus>Spin again <span aria-hidden="true">↗</span></button>
+            <button id="removeWinnerBtn" class="btn btn-secondary" type="button">Remove this winner</button>
+            <button id="closeResult" class="btn btn-text" type="button">Done</button>
         </div>
-    </div>
-
-    <script src="script.js"></script>
+    </dialog>
 </body>
-
 </html>

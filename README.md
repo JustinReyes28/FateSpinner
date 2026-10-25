@@ -1,58 +1,57 @@
 # FateSpinner
 
-> A minimalist, monochromatic decision-maker.
+A small, private decision wheel. Add your options, spin, and let chance choose.
 
-FateSpinner is a distraction-free web application designed to help you make choices with clarity and style. Focused on typography and fluid interaction, it transforms the classic "wheel of fortune" into a human-crafted digital experience.
+[Live demo](https://justinreyes28.github.io/FateSpinner/)
 
-[**Live Demo**](https://justinreyes28.github.io/FateSpinner/)
+## Features
 
----
+- A responsive wheel and choice editor, with a quick jump to the editor on phones.
+- Add several choices at once, one per line. Use the button or Ctrl/Cmd + Enter.
+- Choices saved in your browser, with a usable fallback when storage is blocked.
+- Remove individual entries, undo clearing the list, or remove a winner for another round.
+- Equal probability per entry, using the browser's random-number generator when available. Duplicate entries each receive a separate chance.
+- Results land inside the selected segment, away from ambiguous borders.
+- Keyboard-accessible result dialog, visible focus indicators, and reduced-motion support.
+- No dependencies, remote fonts, accounts, analytics, or third-party requests.
 
-## ✦ Key Features
+The wheel supports 2–60 entries, with up to 80 characters per choice. Long labels are shortened on the wheel; the complete text remains in the list and result. Wheels with 13–24 entries use list numbers, and larger wheels show segments without labels to avoid overlap.
 
-- **Dynamic Wheel Logic**: Real-time segment generation using `conic-gradient`.
-- **Typographic Focus**: Clean aesthetics powered by *Inter* and *Work Sans*.
-- **Liquid Animation**: Smooth, momentum-based spin mechanics.
-- **Minimalist Interface**: A monochromatic design that eliminates visual noise.
-- **Responsive by Design**: Seamlessly scales from desktop to mobile screens.
+## Run locally
 
-## ✦ Design Philosophy
+Open `index.html` in a modern browser. No build step is required. Browser storage for local files varies by browser; use a local server for consistent persistence:
 
-FateSpinner is built on the principle of **"less is more."** 
-- **Monochromatic Palette**: Utilizing a range of grays and whites to focus on the result, not the colors.
-- **Flat UI**: Avoiding heavy shadows and gradients in favor of a clean, hand-crafted feel.
-- **Motion with Meaning**: Using easing functions that mimic physical momentum.
+```sh
+python -m http.server 8000 --bind 127.0.0.1
+```
 
-## ✦ Tech Stack
+Then open `http://127.0.0.1:8000`.
 
-Built with **Zero Dependencies** to ensure performance and longevity:
-- **HTML5**: Semantic structure.
-- **CSS3**: Custom properties, Flexbox, and sophisticated transitions.
-- **Vanilla JavaScript**: Core logic for randomization, state management, and DOM manipulation.
+Choices are stored only in the current browser profile. Clearing site data removes them; private browsing may retain them only until the session ends.
 
-## ✦ Getting Started
+## Checks
 
-### Local Setup
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/JustinReyes28/FateSpinner.git
-   ```
-2. Open `index.html` in any modern web browser.
+The pure wheel logic uses Node's built-in test runner, with no packages to install:
 
-### How to Spin
-1. **Input**: Add your options in the input field.
-2. **Populate**: Click "Add Word" (or press Enter) to see the wheel update instantly.
-3. **Spin**: Hit the "Spin" button and let fate decide.
-4. **Reset**: Use the "reset" link to clear the slate.
+```sh
+node --test tests/spinner-core.test.js
+node --check script.js
+```
 
-### Application Screenshots
+The tests cover bulk-input validation, stored-data validation, unbiased random selection, and pointer alignment for every supported wheel size.
 
-![FateSpinner Interface](images/img1.png)
-![FateSpinner Spinning Wheel](images/img2.png)
+`tests/browser_smoke.py` additionally checks the UI using an **already installed** Python Playwright package and Microsoft Edge or Google Chrome. With the local server above running:
 
-## ✦ License
+```sh
+python tests/browser_smoke.py --base-url http://127.0.0.1:8000
+```
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+The browser checks block external page requests and do not download a browser or dependencies. Screenshots go to the system temporary directory. Coverage includes persistence, unsafe-looking input rendered as plain text, keyboard operation, result handling, reduced motion, storage failures, and narrow-screen layouts.
 
----
-*Created with care by [Justin Reyes](https://github.com/JustinReyes28)*
+## Built with
+
+HTML, CSS, and vanilla JavaScript. `spinner-core.js` keeps input rules and selection math independent of the DOM.
+
+## License
+
+[MIT](LICENSE) · [Justin Reyes](https://github.com/JustinReyes28)
