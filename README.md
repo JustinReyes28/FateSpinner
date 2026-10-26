@@ -18,7 +18,12 @@ A small, private decision wheel. Add your options, spin, and let chance choose.
 ### Application Screenshots
 
 <p align="center">
-  <img src="images/img1.png" alt="FateSpinner Interface" width="500"> <img src="images/img2.png" alt="FateSpinner Spinning Wheel" width="500">
+  <img src="images/desktop-interface.png" alt="FateSpinner Desktop Interface" width="400">
+  <img src="images/spinning-wheel.png" alt="FateSpinner Spinning Wheel" width="400">
+</p>
+<p align="center">
+  <img src="images/winner-dialog.png" alt="FateSpinner Winner Result Dialog" width="400">
+  <img src="images/mobile-view.png" alt="FateSpinner Mobile View" width="200">
 </p>
 
 ---

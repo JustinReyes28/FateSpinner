@@ -4,6 +4,16 @@ Marketing materials for the recent FateSpinner updates and cleanup refactor, rea
 
 ---
 
+## 📸 Media & Screenshots
+
+The repository includes 4 application screenshots ready for attaching to posts:
+1. **Desktop Interface (`images/desktop-interface.png`):** Clean layout showing wheel and choice management.
+2. **Spinning Wheel (`images/spinning-wheel.png`):** Active smooth CSS rotation in action.
+3. **Winner Result Dialog (`images/winner-dialog.png`):** Accessible result popup with action buttons.
+4. **Mobile Responsive Layout (`images/mobile-view.png`):** Compact view tailored for mobile screens.
+
+---
+
 ## 🐦 Twitter / X Post
 
 **Option 1: Short & Punchy**
@@ -18,6 +28,8 @@ Marketing materials for the recent FateSpinner updates and cleanup refactor, rea
 >
 > 🕹️ Try it live: https://justinreyes28.github.io/FateSpinner/
 > 📦 GitHub: https://github.com/JustinReyes28/FateSpinner
+>
+> *(Attach `images/desktop-interface.png` or `images/spinning-wheel.png`)*
 >
 > #webdev #javascript #buildinpublic #opensource #html5
 
@@ -46,6 +58,8 @@ Marketing materials for the recent FateSpinner updates and cleanup refactor, rea
 > 🔗 **Live Demo:** [https://justinreyes28.github.io/FateSpinner/](https://justinreyes28.github.io/FateSpinner/)
 > 💻 **GitHub Repo:** [https://github.com/JustinReyes28/FateSpinner](https://github.com/JustinReyes28)
 >
+> *(See attached screenshots or repository `images/` directory for visual previews)*
+>
 > I’d love to hear your thoughts, feedback, or suggestions for improvement!
 
 ---
@@ -68,5 +82,7 @@ Marketing materials for the recent FateSpinner updates and cleanup refactor, rea
 >
 > 🌐 **Live Application:** https://justinreyes28.github.io/FateSpinner/
 > 📂 **GitHub Repository:** https://github.com/JustinReyes28/FateSpinner
+>
+> *(Recommendation: Attach `images/desktop-interface.png` and `images/winner-dialog.png` to the post)*
 >
 > #SoftwareEngineering #WebDevelopment #JavaScript #OpenSource #UserExperience #Frontend
